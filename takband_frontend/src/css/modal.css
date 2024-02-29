@@ -1,0 +1,71 @@
+/* Start Modal Section */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100; /* Ensure modal is above other elements */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 95vw; /* Adjust as needed */
+    width: 90%; /* Adjust as needed */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1; /* Ensure header stays above content */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* End Modal Section */
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+    .modal-content {
+        max-width: 500px; /* Adjust as needed */
+        width: auto;
+    }
+}
