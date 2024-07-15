@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Swal from "sweetalert2";
 
 export default function ContactPage() {
 	const [accepted_terms, setAccepted_terms] = useState(false);
@@ -16,6 +17,22 @@ export default function ContactPage() {
 		accepted_terms: false,
 	});
 
+	const handleSuccessAlert = () => {
+		Swal.fire({
+			title: "Success",
+			text: "Thank you for sending the request, you will be contacted shortly!",
+			icon: "success"
+		  });
+	};
+
+	const handleErrorAlert = (text) => {
+		Swal.fire({
+			title: "Error",
+			text: text,
+			icon: "error"
+		  });
+	};
+
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
@@ -24,7 +41,7 @@ export default function ContactPage() {
 		e.preventDefault();
 
 		if (!formData.accepted_terms) {
-			alert("Please agree to the terms and conditions before submitting.");
+			handleErrorAlert("Please agree to the terms and conditions before submitting.");
 			return;
 		}
 
@@ -32,7 +49,7 @@ export default function ContactPage() {
 			const response = await axios.post(API_URL, formData);
 
 			if (response.status === 201) {
-				alert("Thank you, you will be contacted shortly!");
+				handleSuccessAlert();
 				setFormData({
 					first_name: "",
 					last_name: "",
@@ -45,11 +62,11 @@ export default function ContactPage() {
 				console.log(formData);
 			} else {
 				console.error("Error submitting enquiry:", response.data);
-				alert("An error occurred. Please try again later.");
+				handleErrorAlert("An error occurred. Please try again later.");
 			}
 		} catch (error) {
 			console.error("Error sending request:", error);
-			alert("An error occurred. Please try again later.");
+			handleErrorAlert("An error occurred. Please try again later.");
 		}
 	};
 
@@ -83,6 +100,7 @@ export default function ContactPage() {
 										<input
 											type="text"
 											name="first_name"
+											required
 											onChange={handleChange}
 											id="first_name"
 											autoComplete="given-name"
@@ -101,6 +119,7 @@ export default function ContactPage() {
 										<input
 											type="text"
 											name="last_name"
+											required
 											onChange={handleChange}
 											id="last_name"
 											autoComplete="family-name"
@@ -119,6 +138,7 @@ export default function ContactPage() {
 										<input
 											type="text"
 											name="company_name"
+											required
 											onChange={handleChange}
 											id="company_name"
 											autoComplete="organization"
@@ -138,6 +158,7 @@ export default function ContactPage() {
 											type="email"
 											name="email_address"
 											onChange={handleChange}
+											required
 											id="email_address"
 											autoComplete="email"
 											className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -161,6 +182,7 @@ export default function ContactPage() {
 											type="tel"
 											name="phone_number"
 											onChange={handleChange}
+											required
 											id="phone_number"
 											autoComplete="tel"
 											className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -176,6 +198,7 @@ export default function ContactPage() {
 									</label>
 									<div className="mt-2.5">
 										<textarea
+											required
 											name="message"
 											id="message"
 											onChange={handleChange}

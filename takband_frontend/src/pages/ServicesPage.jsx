@@ -12,6 +12,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Modal from "../components/Modal";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ServicePage = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,7 +20,6 @@ const ServicePage = () => {
 	const handleOpenModal = () => setIsModalOpen(true);
 	const handleCloseModal = () => setIsModalOpen(false);
 
-	
 	const [services, setServices] = useState([
 		{ id: 1, name: "CCTV Surveillance", icon: CCTVIcon },
 		{ id: 2, name: "Wifi Installation", icon: WiFiIcon },
@@ -31,7 +31,7 @@ const ServicePage = () => {
 		{ id: 8, name: "Selling Hardware", icon: HardwareStoreIcon },
 		{ id: 9, name: "Handyman Services", icon: HandymanIcon },
 	]);
-	
+
 	const [selectedService, setSelectedService] = useState(null);
 	const API_URL = "http://localhost:8000/app/services/";
 	const [formData, setFormData] = useState({
@@ -44,6 +44,22 @@ const ServicePage = () => {
 		accepted_terms: false,
 		service_required: "",
 	});
+
+	const handleSuccessAlert = () => {
+		Swal.fire({
+			title: "Success",
+			text: "Thank you for sending the request, you will be contacted shortly!",
+			icon: "success",
+		});
+	};
+
+	const handleErrorAlert = (text) => {
+		Swal.fire({
+			title: "Error",
+			text: text,
+			icon: "error",
+		});
+	};
 
 	const handleServiceSelect = (service) => {
 		setSelectedService(service);
@@ -61,7 +77,7 @@ const ServicePage = () => {
 		e.preventDefault();
 
 		if (!formData.accepted_terms) {
-			alert(
+			handleErrorAlert(
 				"Please agree to the terms and conditions before submitting."
 			);
 			return;
@@ -69,9 +85,9 @@ const ServicePage = () => {
 
 		try {
 			const response = await axios.post(API_URL, formData);
-			
+
 			if (response.status === 201) {
-				alert("Thank you, you will be contacted shortly!");
+				handleSuccessAlert();
 				console.log(response.data);
 				setFormData({
 					first_name: "",
@@ -83,16 +99,13 @@ const ServicePage = () => {
 					service_required: "",
 					accepted_terms: false,
 				});
-				console.log(formData);
 			} else {
 				console.error("Error submitting enquiry:", response.data);
-				console.log(response.data);
-				alert("An error occurred. Please try again later.");
+				handleErrorAlert("An error occurred. Please try again later.");
 			}
 		} catch (error) {
 			console.error("Error sending request:", error);
-			console.log(response.data);
-			alert("An error occurred. Please try again later.");
+			handleErrorAlert("An error occurred. Please try again later.");
 		}
 	};
 

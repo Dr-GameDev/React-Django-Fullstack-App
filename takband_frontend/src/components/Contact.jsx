@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import { useState } from "react";
+import Swal  from "sweetalert2";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
@@ -20,6 +21,22 @@ export default function Contact() {
 		accepted_terms: false,
 	});
 
+	const handleSuccessAlert = () => {
+		Swal.fire({
+			title: "Success",
+			text: "Thank you for sending the request, you will be contacted shortly!",
+			icon: "success"
+		  });
+	};
+
+	const handleErrorAlert = (text) => {
+		Swal.fire({
+			title: "Error",
+			text: text,
+			icon: "error"
+		  });
+	};
+
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
@@ -28,7 +45,7 @@ export default function Contact() {
 		e.preventDefault();
 
 		if (!formData.accepted_terms) {
-			alert(
+			handleErrorAlert(
 				"Please agree to the terms and conditions before submitting."
 			);
 			return;
@@ -38,7 +55,7 @@ export default function Contact() {
 			const response = await axios.post(API_URL, formData);
 
 			if (response.status === 201) {
-				alert("Thank you, you will be contacted shortly!");
+				handleSuccessAlert();
 				setFormData({
 					first_name: "",
 					last_name: "",
@@ -50,11 +67,11 @@ export default function Contact() {
 				});
 			} else {
 				console.error("Error submitting enquiry:", response.data);
-				alert("An error occurred. Please try again later.");
+				handleErrorAlert("An error occurred. Please try again later.");
 			}
 		} catch (error) {
 			console.error("Error sending request:", error);
-			alert("An error occurred. Please try again later.");
+			handleErrorAlert("An error occurred. Please try again later.");
 		}
 	};
 

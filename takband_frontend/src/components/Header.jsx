@@ -5,11 +5,10 @@ import { Link } from "react-router-dom";
 import companyLogo from "../assets/takband_logo.svg";
 
 const navigation = [
-	{id: 1, name: "Home", href: "/" },
-	{id: 2, name: "Services", href: "/services" },
-	{id: 3, name: "About Us", href: "/about" },
-	{id: 4, name: "Contact Us", href: "/contact" },
-	
+	{ id: 1, name: "Home", href: "/" },
+	{ id: 2, name: "Services", href: "/services" },
+	{ id: 3, name: "About Us", href: "/about" },
+	{ id: 4, name: "Contact Us", href: "/contact" },
 ];
 
 export default function Header() {
@@ -17,7 +16,7 @@ export default function Header() {
 
 	return (
 		<div className="flex flex-wrap flex-col text-white bg-gradient-to-b from-primary to-secondary bg-cover">
-			<header className="absolute inset-x-0 top-0 z-50 sticky top-0 shadow-md">
+			<header className="inset-x-0 top-0 z-50 sticky shadow-md">
 				<nav
 					className="flex items-center justify-between p-6 lg:px-8"
 					aria-label="Global"
@@ -38,7 +37,7 @@ export default function Header() {
 					<div className="flex lg:hidden">
 						<button
 							type="button"
-							className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+							className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
 							onClick={() => setMobileMenuOpen(true)}
 						>
 							<span className="sr-only">Open main menu</span>
@@ -75,7 +74,7 @@ export default function Header() {
 					onClose={setMobileMenuOpen}
 				>
 					<div className="fixed inset-0 z-50" />
-					<Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gradient-to-b from-secondary via-fuchsia-500 to-indigo-500 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+					<Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gradient-to-b from-secondary via-accent to-indigo-500 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
 						<div className="flex items-center justify-between">
 							<Link to="/" className="-m-1.5 p-1.5">
 								<span className="sr-only">
@@ -84,7 +83,7 @@ export default function Header() {
 								<img
 									className="h-8 w-auto"
 									src={companyLogo}
-									alt=""
+									alt="logo"
 								/>
 							</Link>
 							<button
