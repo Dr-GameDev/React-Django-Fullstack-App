@@ -16,7 +16,7 @@ export default function Hero() {
 
 	return (
 		<div className="text-white bg-hero-image bg-cover">
-			<header className="absolute inset-x-0 top-0 z-50 sticky top-0 shadow-md">
+			<header className="inset-x-0 top-0 z-50 sticky shadow-md">
 				<nav
 					className="flex items-center justify-between p-6 lg:px-8"
 					aria-label="Global"
